@@ -1,42 +1,66 @@
-# Disk Full Incident Response Lab
+# P1 – Disk Full Incident Response Lab
 
-This project demonstrates how to simulate and troubleshoot a disk full condition on a Linux system.
+## Part 1 – Incident Simulation
 
-The lab environment uses Ubuntu running in VirtualBox. The goal of the exercise is to intentionally fill the disk space, observe the system behavior when storage becomes exhausted, and then apply standard Linux troubleshooting commands to identify and resolve the issue.
+This project demonstrates how to simulate a disk full condition on a Linux system and perform standard troubleshooting steps to resolve the issue.
 
-The process begins by checking the current disk usage using the following command:
+The lab environment uses Ubuntu running in VirtualBox. The objective is to intentionally fill disk space and observe how the system behaves when storage becomes exhausted.
+
+First, check the current disk usage:
 
 df -h
 
-Large files are then created to simulate heavy disk usage:
+Large files are created to simulate heavy disk usage:
 
 fallocate -l 18G bigfile1
 fallocate -l 2G bigfile2
 
-Disk usage is checked again to confirm that the system is approaching full capacity.
+Disk usage is checked again:
+
+df -h
 
 Next, additional data is written to trigger the disk full condition:
 
 dd if=/dev/zero of=triggerfile bs=100M status=progress
 
-At this point the system produces the expected error:
+The system then produces the expected error:
 
 No space left on device
 
-To identify which files are consuming the most storage, the following command is used:
+---
+
+## Part 2 – Investigation and Resolution
+
+To identify which files are consuming the most disk space, run:
 
 du -ah . | sort -rh | head
 
-This command lists the largest files in the directory and helps quickly locate the source of disk usage.
+Example output:
 
-After identifying the large files, they are removed:
+19G ./bigfile1  
+2.1G ./bigfile2  
+1.1G ./triggerfile  
+
+These files consumed most of the available disk capacity.
+
+The large files are removed to restore disk space:
 
 rm bigfile1 bigfile2 triggerfile
 
-Finally, disk usage is checked again:
+Finally, verify that disk space has recovered:
 
 df -h
 
-After deleting the unnecessary files, the disk space returns to normal and the system functions correctly again.
+After removing the unnecessary files, disk usage returns to normal and the system functions correctly again.
 
-This lab demonstrates a typical troubleshooting workflow used by Linux administrators and data center technicians when responding to disk space incidents.
+---
+
+## Evidence
+
+Terminal session logs are included in:
+
+terminal.log
+
+Screenshots are included in:
+
+screenshots/
