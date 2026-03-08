@@ -1,66 +1,124 @@
-# P1 – Disk Full Incident Response Lab
+# P1 - Disk Full Incident
 
-## Part 1 – Incident Simulation
+## Overview
 
-This project demonstrates how to simulate a disk full condition on a Linux system and perform standard troubleshooting steps to resolve the issue.
+This project simulates a common Linux infrastructure incident where a system runs out of disk space.
 
-The lab environment uses Ubuntu running in VirtualBox. The objective is to intentionally fill disk space and observe how the system behaves when storage becomes exhausted.
+The goal of this lab is to:
 
-First, check the current disk usage:
+- simulate disk exhaustion
+- investigate which files consume disk space
+- restore the system to a healthy state
+
+Environment:
+
+Ubuntu Linux running in VirtualBox.
+
+---
+
+## Incident Summary
+
+Incident Type: Disk Space Exhaustion  
+Environment: Ubuntu Linux VM  
+Impact: System cannot write new data
+
+Observed error:
+
+
+No space left on device
+
+
+This type of incident commonly occurs when:
+
+- log files grow uncontrollably
+- temporary files accumulate
+- monitoring or cleanup processes fail
+
+---
+
+## Simulation
+
+Initial disk usage:
+
 
 df -h
 
-Large files are created to simulate heavy disk usage:
+
+Example output:
+
+
+/dev/sda2 30G 6.9G 22G 25% /
+
+
+Large files were created to simulate heavy disk usage:
+
 
 fallocate -l 18G bigfile1
 fallocate -l 2G bigfile2
 
-Disk usage is checked again:
 
-df -h
+Disk usage increased:
 
-Next, additional data is written to trigger the disk full condition:
+
+/dev/sda2 30G 27G 1.1G 97% /
+
+
+Disk was filled completely using:
+
 
 dd if=/dev/zero of=triggerfile bs=100M status=progress
 
-The system then produces the expected error:
+
+System returned:
+
 
 No space left on device
 
+
 ---
 
-## Part 2 – Investigation and Resolution
+## Investigation
 
-To identify which files are consuming the most disk space, run:
+Identify large files consuming disk space:
+
 
 du -ah . | sort -rh | head
 
-Example output:
 
-19G ./bigfile1  
-2.1G ./bigfile2  
-1.1G ./triggerfile  
+Example result:
 
-These files consumed most of the available disk capacity.
 
-The large files are removed to restore disk space:
+19G ./bigfile1
+2.1G ./bigfile2
+1.1G ./triggerfile
+
+
+---
+
+## Resolution
+
+Remove large files:
+
 
 rm bigfile1 bigfile2 triggerfile
 
-Finally, verify that disk space has recovered:
+
+Verify disk recovery:
+
 
 df -h
 
-After removing the unnecessary files, disk usage returns to normal and the system functions correctly again.
+
+Disk usage returned to normal.
 
 ---
 
 ## Evidence
 
-Terminal session logs are included in:
+Terminal session log:
 
 terminal.log
 
-Screenshots are included in:
+Screenshots:
 
 screenshots/
