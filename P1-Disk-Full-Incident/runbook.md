@@ -1,50 +1,78 @@
-# Runbook – Disk Full Incident
+# Runbook - Disk Full Incident
 
-## Part 1 – Symptoms and Detection
+## Symptoms
 
-A disk full condition may cause the following issues:
+Possible indicators of a disk full incident:
 
-No space left on device
+- Error message: `No space left on device`
+- Applications cannot write logs
+- System services fail to start
+- High disk usage reported by monitoring tools
 
-Applications may fail to write logs or create files.
+Check disk usage:
 
-Check disk usage with:
 
 df -h
 
-If disk usage is close to 100%, the system may be out of disk space.
+
+If disk usage is near 100%, further investigation is required.
 
 ---
 
-## Part 2 – Investigation and Remediation
+## Investigation
 
-Locate the largest files on the system:
+Identify directories or files consuming disk space:
+
 
 du -ah . | sort -rh | head
 
-This command lists the largest files and helps identify what is consuming disk space.
+
+Look for:
+
+- large log files
+- temporary files
+- unexpected data growth
 
 Example output:
 
-19G ./bigfile1  
-2.1G ./bigfile2  
-1.1G ./triggerfile  
 
-Remove unnecessary large files:
+19G ./bigfile1
+2.1G ./bigfile2
+1.1G ./triggerfile
 
-rm bigfile1 bigfile2 triggerfile
-
-Verify disk usage has returned to normal:
-
-df -h
 
 ---
 
-## Prevention
+## Remediation
 
-Recommended practices:
+Remove unnecessary large files:
 
-• Monitor disk usage regularly  
-• Configure disk usage alerts  
-• Implement log rotation using logrotate  
-• Remove unused large files
+
+rm bigfile1 bigfile2 triggerfile
+
+
+Recheck disk usage:
+
+
+df -h
+
+
+Confirm that disk space has been released.
+
+---
+
+## Verification
+
+Verify system health:
+
+
+df -h
+
+
+Expected result:
+
+Disk usage should return to normal levels.
+
+---
+
+
