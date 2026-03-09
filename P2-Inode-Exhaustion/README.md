@@ -101,10 +101,6 @@ Inodes should now be available again.
 
 ## Evidence
 
-Terminal session log:
-
 terminal.log
-
-Screenshots:
 
 screenshots/
