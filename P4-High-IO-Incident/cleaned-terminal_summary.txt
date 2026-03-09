@@ -1,1 +1,77 @@
+P4 High IO Incident Lab - Cleaned Terminal Summary
 
+=== P4 HIGH IO INCIDENT START ===
+Date: Mon Mar 9 03:40:06 AM PDT 2026
+
+1. Created the project directory and entered it:
+
+mkdir ~/P4-High-IO-Lab
+cd ~/P4-High-IO-Lab
+
+2. Checked baseline disk I/O performance:
+
+iostat -x 1 4
+
+Observation:
+System was mostly idle during the baseline check.
+Initial disk utilization on /dev/sda was low, around 9–10%.
+CPU iowait was also low.
+
+3. Started extended I/O monitoring:
+
+iostat -x 1
+
+4. During the high I/O condition, the following indicators were observed on /dev/sda:
+
+- %util repeatedly increased to approximately 93%–99%
+- %iowait increased significantly, reaching approximately 62%–94%
+- write throughput (wkB/s) increased substantially
+- the system spent a large portion of CPU time waiting on disk I/O
+
+Example observations:
+- %util = 99.20%, %iowait = 62.83%
+- %util = 98.20%, %iowait = 79.12%
+- %util = 97.80%, %iowait = 84.80%
+- %util = 98.02%, %iowait = 93.92%
+- %util = 97.40%, %iowait = 89.07%
+- %util = 93.50%, %iowait = 55.15%
+
+This confirmed a sustained high disk I/O condition.
+
+5. Investigated running fio processes:
+
+ps aux | grep fio
+
+Result:
+Two fio-related processes were identified:
+
+PID 7003
+PID 7007
+
+Command observed:
+fio --name=high-io-test --filename=fiotestfile --size=20G --rw=write --bs=1M --iodepth=16 --runtime=600 --time_based
+
+6. Stopped the I/O workload:
+
+kill 7003
+kill 7007
+
+Result:
+One process terminated successfully.
+The second process had already exited by the time the kill command was issued.
+
+7. Verified recovery after stopping the workload:
+
+iostat -x 1 2
+
+Observation:
+Disk activity returned to near zero.
+CPU idle returned to approximately 99%.
+Disk utilization on /dev/sda dropped back to 0%.
+This confirmed that the high I/O condition had ended.
+
+=== P4 HIGH IO INCIDENT END ===
+Date: Mon Mar 9 03:52:54 AM PDT 2026
+
+Summary:
+This lab simulated a high disk I/O incident using fio and monitored the system with iostat. During the incident, disk utilization on /dev/sda rose close to 100% and CPU iowait became very high, indicating a disk bottleneck. The source of the I/O load was identified with ps aux | grep fio, and the issue was resolved by terminating the fio process. Final verification confirmed that disk utilization and iowait returned to normal.
