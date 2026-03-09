@@ -111,10 +111,3 @@ df -h
 
 Disk usage returned to normal.
 
----
-
-## Evidence
-
-terminal.log
-
-Screenshots:
