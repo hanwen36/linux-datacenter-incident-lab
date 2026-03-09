@@ -1,69 +1,94 @@
-P3 - Deleted File Handle Incident
-Overview
+# P3 - Deleted File Handle Incident Lab
 
-This project simulates a common Linux storage issue where disk space is not released after a file is deleted.
-The problem occurs when a running process still holds an open file handle to the deleted file.
+## Overview
 
-This scenario frequently appears in production environments when large log files are deleted while still being used by an active process.
+This lab simulates a common Linux production issue where disk space is not released even after a file is deleted.
 
-Problem
+In many real-world systems, a file can be deleted from the filesystem while a running process is still holding the file open. In this situation, the disk space will not be released until the process is terminated.
 
-Disk space remained occupied even after a large log file was deleted.
+This lab demonstrates how to identify and resolve this issue.
 
-Although the file no longer appeared in the directory listing, the space was not returned to the filesystem.
+---
 
-Simulation
+## Scenario
 
-The issue was reproduced by:
+A large log file is created and opened by a running process.  
+The file is then deleted while the process still holds the file handle.
 
-Creating a large log file
+Even though the file is deleted, the disk space remains used.
 
-Opening the file with a running process (tail)
+The objective is to identify the process holding the deleted file and release the disk space.
 
-Deleting the file while the process still had the file open
+---
 
-Because the process continued to hold the file descriptor, the disk space remained allocated.
+## Tools Used
 
-Investigation
+Common Linux troubleshooting tools were used:
 
-The investigation focused on identifying processes that were still holding deleted files.
+- `df`
+- `dd`
+- `rm`
+- `lsof`
+- `kill`
 
-The lsof command was used to locate open file handles marked as deleted.
+---
 
-Example investigation command:
+## Lab Steps
+
+### 1 Create a large test file
+
+
+dd if=/dev/zero of=big.log bs=1M count=300
+
+
+This creates a 300MB file.
+
+---
+
+### 2 Simulate a process using the file
+
+A process reads the file so the file descriptor remains open.
+
+---
+
+### 3 Delete the file
+
+
+rm big.log
+
+
+The file disappears from the directory but the disk space is still occupied.
+
+---
+
+### 4 Identify deleted files still in use
+
 
 lsof | grep deleted
 
-This revealed the process that continued to hold the file descriptor.
 
-Resolution
+This shows processes holding deleted files.
 
-The issue was resolved by terminating the process that held the deleted file handle.
+---
 
-Once the process stopped, the filesystem released the disk space.
+### 5 Terminate the process
 
-Verification was performed using:
 
-df -h
+kill <PID>
 
-Disk space returned to normal after the process was terminated.
 
-Commands Used
-Command	Purpose
-dd	Create a large test file
-tail	Keep the file open with a running process
-rm	Delete the file while still open
-lsof	Identify processes holding deleted files
-ps	Inspect running processes
-kill	Terminate the process holding the file
-Skills Demonstrated
+After terminating the process, the disk space is released.
 
-Linux filesystem troubleshooting
+---
 
-File descriptor investigation
+## Evidence
 
-Production-style incident analysis
+Screenshots of each step are stored in the `screenshots` folder.
 
-Process management
+Terminal session logs are stored in:
 
-Root cause analysis
+
+terminal.log
+
+
+
