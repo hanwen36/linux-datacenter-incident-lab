@@ -1,0 +1,117 @@
+P2 Inode Full Incident Lab - Cleaned Terminal Summary
+
+=== P2 INODE FULL START ===
+Date: Sun Mar 8 04:36:48 PM PDT 2026
+
+1. Created the project directory and entered it:
+
+mkdir ~/P2-Inode-Full
+cd ~/P2-Inode-Full
+
+2. Created a small disk image to simulate a filesystem:
+
+dd if=/dev/zero of=inodelab.img bs=1M count=16
+
+Result:
+16 MB disk image created.
+
+3. Created an ext4 filesystem with a limited number of inodes:
+
+mkfs.ext4 -N 128 inodelab.img
+
+Result:
+Filesystem created with only 128 inodes.
+
+4. Created a mount point and mounted the filesystem:
+
+mkdir mnt
+sudo mount -o loop inodelab.img mnt
+
+5. Checked inode usage:
+
+df -i mnt
+
+Result:
+Inodes: 128 total
+Used: 11
+Free: 117
+Usage: 9%
+
+6. Entered the mounted filesystem:
+
+cd mnt
+
+7. Created a directory to store many small files:
+
+mkdir smallfiles
+
+Permission issue occurred initially. Ownership was fixed:
+
+sudo chown hanwen:hanwen .
+
+Then entered the directory:
+
+cd smallfiles
+
+8. Created many small files until inode exhaustion:
+
+i=1; while true; do touch file$i || break; ((i++)); done
+
+Result:
+touch: No space left on device
+
+9. Verified inode exhaustion:
+
+df -i ..
+
+Result:
+/dev/loop0
+Inodes: 128
+Used: 128
+Free: 0
+Usage: 100%
+
+10. Counted created files:
+
+ls | wc -l
+
+Result:
+116 files created.
+
+11. Identified directories consuming inodes:
+
+du --inodes -d 2 | sort -nr | head
+
+Result:
+119 .
+117 ./smallfiles
+1 ./lost+found
+
+12. Removed the small files directory to recover inodes:
+
+rm -rf smallfiles
+
+13. Verified inode recovery:
+
+df -i
+
+Result:
+/dev/loop0
+Inodes: 128
+Used: 11
+Free: 117
+Usage: 9%
+
+14. Verified filesystem space and inode status:
+
+df -h .
+df -i .
+
+Filesystem returned to normal state.
+
+=== P2 INODE FULL END ===
+Date: Sun Mar 8 04:55:05 PM PDT 2026
+
+Summary:
+This lab simulated an inode exhaustion incident by creating a filesystem with a limited number of inodes and generating many small files until the inode limit was reached. The issue was confirmed using df -i, and the inode usage was analyzed with du --inodes. Removing the directory containing the small files restored the available inodes and returned the filesystem to normal operation.
+
