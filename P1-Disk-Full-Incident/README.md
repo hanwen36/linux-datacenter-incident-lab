@@ -115,10 +115,6 @@ Disk usage returned to normal.
 
 ## Evidence
 
-Terminal session log:
-
 terminal.log
 
 Screenshots:
-
-screenshots/
