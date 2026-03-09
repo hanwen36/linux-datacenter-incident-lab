@@ -1,0 +1,69 @@
+P3 Deleted File Incident Lab - Cleaned Terminal Summary
+
+=== P3 DELETED FILE INCIDENT START ===
+Date: Sun Mar 8 05:24:07 PM PDT 2026
+
+1. Created project directory and entered it:
+
+mkdir ~/P3-Deleted-File-Lab
+cd ~/P3-Deleted-File-Lab
+
+2. Checked initial disk usage:
+
+df -h
+
+Result:
+/dev/sda2  30G total, 6.9G used, 21G available
+
+3. Created a test directory:
+
+mkdir test
+cd test
+
+4. Created a large log file:
+
+dd if=/dev/zero of=big.log bs=1M count=300
+
+Result:
+300MB file created.
+
+5. Deleted the file:
+
+rm big.log
+
+However, disk usage did not decrease immediately.
+
+6. Checked disk usage again:
+
+df -h
+
+Observation:
+Disk usage still showed increased space consumption.
+
+7. Investigated deleted files still held open by processes:
+
+lsof | grep deleted
+
+Result:
+tail 1867 ... big.log (deleted)
+
+This indicated that the process with PID 1867 still had the deleted file open.
+
+8. Terminated the process holding the deleted file:
+
+kill 1867
+
+9. Verified disk space recovery:
+
+df -h
+
+Result:
+/dev/sda2  30G total, 6.9G used
+
+Disk space returned to normal.
+
+=== P3 DELETED FILE INCIDENT END ===
+Date: Sun Mar 8 05:36:49 PM PDT 2026
+
+Summary:
+This lab simulated a deleted file incident where a file was removed from the filesystem but remained in use by a running process. The issue was diagnosed using lsof to identify deleted files still held open. Terminating the responsible process released the inode and restored disk space.
