@@ -97,10 +97,3 @@ df -i
 
 Inodes should now be available again.
 
----
-
-## Evidence
-
-terminal.log
-
-screenshots/
