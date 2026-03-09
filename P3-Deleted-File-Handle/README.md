@@ -78,17 +78,3 @@ kill <PID>
 
 
 After terminating the process, the disk space is released.
-
----
-
-## Evidence
-
-Screenshots of each step are stored in the `screenshots` folder.
-
-Terminal session logs are stored in:
-
-
-terminal.log
-
-
-
