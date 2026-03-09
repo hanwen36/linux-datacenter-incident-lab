@@ -1,40 +1,38 @@
-# Runbook – Inode Exhaustion
+# Runbook - Inode Full Incident
 
-## Incident
+## Symptoms
 
-System reports:
+Possible indicators of an inode exhaustion issue:
 
-No space left on device
+- Error: `No space left on device`
+- New files cannot be created
+- Disk space appears available
 
-But disk space is still available.
+Check inode usage:
+
+
+df -i
+
+
+If inode usage is near 100%, further investigation is required.
 
 ---
 
 ## Investigation
 
-Check disk usage:
+Identify directories consuming large numbers of inodes:
 
-df -h
 
-If disk is not full, check inode usage:
+du --inodes -d 2 | sort -nr | head
 
-df -i
 
-If output shows:
+Example result:
 
-IUse% = 100%
 
-then the filesystem has run out of inodes.
+117 ./smallfiles
 
----
 
-## Identify Cause
-
-Check number of files in the directory:
-
-ls | wc -l
-
-Large numbers of small files can exhaust inodes.
+This indicates a directory containing a large number of small files.
 
 ---
 
@@ -42,28 +40,36 @@ Large numbers of small files can exhaust inodes.
 
 Remove unnecessary files:
 
-rm file_*
+
+rm -rf smallfiles
+
+
+Recheck inode usage:
+
+
+df -i
+
 
 ---
 
 ## Verification
 
-Confirm inode usage has recovered:
+Verify inode availability:
+
 
 df -i
 
+
 Expected result:
 
-IUse% significantly reduced.
 
-The system should now allow file creation.
+IUse% significantly reduced
+
 
 ---
 
-## Prevention
+## Evidence
 
-Recommended practices:
+terminal.log
 
-• Monitor inode usage  
-• Rotate logs regularly  
-• Clean temporary directories
+screenshots/
