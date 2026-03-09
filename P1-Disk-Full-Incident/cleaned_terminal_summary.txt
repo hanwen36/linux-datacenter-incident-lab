@@ -1,1 +1,63 @@
+P1 Disk Full Incident Lab - Cleaned Terminal Summary
 
+=== P1 DISK FULL START ===
+Disk Full Incident Lab
+Date: Sun Mar 8 02:16:00 PM PDT 2026
+
+1. Created project directory and entered lab folder:
+   mkdir ~/P1-DiskFull
+   cd ~/P1-DiskFull
+
+2. Checked initial disk usage:
+   df -h
+
+   Result:
+   /dev/sda2  30G total, 6.9G used, 22G available, 25% used
+
+3. Created first large file to consume disk space:
+   fallocate -l 18G bigfile1
+
+4. Checked disk usage again:
+   df -h
+
+   Result:
+   /dev/sda2  30G total, 25G used, 3.1G available, 90% used
+
+5. Created second large file to push disk usage higher:
+   fallocate -l 2G bigfile2
+
+6. Checked disk usage again:
+   df -h
+
+   Result:
+   /dev/sda2  30G total, 27G used, 1.1G available, 97% used
+
+7. Triggered disk full condition by writing additional data:
+   dd if=/dev/zero of=triggerfile bs=100M status=progress
+
+   Result:
+   dd: error writing 'triggerfile': No space left on device
+
+8. Investigated large files in the working directory:
+   du -ah . | sort -rf | head
+
+   Result:
+   22G .
+   2.1G ./bigfile2
+   19G ./bigfile1
+   1.1G ./triggerfile
+
+9. Removed the test files to recover disk space:
+   rm bigfile1 bigfile2 triggerfile
+
+10. Verified disk space recovery:
+    df -h
+
+    Result:
+    /dev/sda2  30G total, 6.9G used, 22G available, 25% used
+
+=== P1 DISK FULL END ===
+Date: Sun Mar 8 02:24:00 PM PDT 2026
+
+Summary:
+This lab simulated a disk full incident by creating large files until the system returned the error "No space left on device." Disk usage was confirmed with df -h, large files were identified with du -ah, and the issue was resolved by deleting the test files and verifying that disk usage returned to normal.
