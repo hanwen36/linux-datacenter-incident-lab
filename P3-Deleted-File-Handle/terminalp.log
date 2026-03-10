@@ -1,14 +1,20 @@
 Script started on 2026-03-08 17:23:32-07:00 [TERM="linux" TTY="/dev/tty1" COLUMNS="160" LINES="50"]
 [?2004hhanwen@hanwen:~$ echo "=== [K[K[K[K===[K[K[K=== P3 DELETED fi[K[KFILE INCIDENT START ==="
-[?2004l=== P3 DELETED FILE INCIDENT START ===
+[?2004l
+=== P3 DELETED FILE INCIDENT START ===
 [?2004hhanwen@hanwen:~$ date
-[?2004lSun Mar  8 05:24:07 PM PDT 2026
+[?2004l
+Sun Mar  8 05:24:07 PM PDT 2026
 [?2004hhanwen@hanwen:~$ mkdir ~/P3-Deleted-File-Lab
-[?2004l[?2004hhanwen@hanwen:~$ cd ~/p3-Deleted-File-Lab
-[?2004lbash: cd: /home/hanwen/p3-Deleted-File-Lab: No such file or directory
+[?2004l
+[?2004hhanwen@hanwen:~$ cd ~/p3-Deleted-File-Lab
+[?2004l
+bash: cd: /home/hanwen/p3-Deleted-File-Lab: No such file or directory
 [?2004hhanwen@hanwen:~$ cd ~/p3-Deleted-File-Lab[C[1P3-Deleted-File-Labp3-Deleted-File-Lab[1P3-Deleted-File-LabP3-Deleted-File-Lab
-[?2004l[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab$ df -h
-[?2004lFilesystem      Size  Used Avail Use% Mounted on
+[?2004l
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab$ df -h
+[?2004l
+Filesystem      Size  Used Avail Use% Mounted on
 tmpfs           392M  1.1M  391M   1% /run
 /dev/sda2        30G  6.9G   21G  25% /
 tmpfs           2.0G     0  2.0G   0% /dev/shm
@@ -16,16 +22,24 @@ tmpfs           5.0M     0  5.0M   0% /run/lock
 linux           952G  374G  579G  40% /media/sf_linux
 tmpfs           392M   16K  392M   1% /run/user/1000
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab$ mkdir test
-[?2004l[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab$ cd test
-[?2004l[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ dd if [K=/dev/zer of [K=big.log bs-[K=1M count=300
-[?2004ldd: failed to open '/dev/zer': No such file or directory
+[?2004l
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab$ cd test
+[?2004l
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ dd if [K=/dev/zer of [K=big.log bs-[K=1M count=300
+[?2004l
+dd: failed to open '/dev/zer': No such file or directory
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ dd if=/dev/zer of=big.log bs=1M count=300[C[C[1@o[1P[C[1@p[1P[1@o
-[?2004l300+0 records in
+[?2004l
+300+0 records in
 300+0 records out
 314572800 bytes (315 MB, 300 MiB) copied, 0.0882602 s, 3.6 GB/s
-[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ (arg: 1) [K2[C[C[33@hanwen@hanwen:~/P3-Deleted-File-Lab/test$[Crm big.log
-[?2004l[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ df -h
-[?2004lFilesystem      Size  Used Avail Use% Mounted on
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ 
+(arg: 1) [K2[C[C
+[33@hanwen@hanwen:~/P3-Deleted-File-Lab/test$[Crm big.log
+[?2004l
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ df -h
+[?2004l
+Filesystem      Size  Used Avail Use% Mounted on
 tmpfs           392M  1.1M  391M   1% /run
 /dev/sda2        30G  7.2G   21G  26% /
 tmpfs           2.0G     0  2.0G   0% /dev/shm
@@ -33,16 +47,20 @@ tmpfs           5.0M     0  5.0M   0% /run/lock
 linux           952G  374G  579G  40% /media/sf_linux
 tmpfs           392M   16K  392M   1% /run/user/1000
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ isof | grep deleted
-[?2004lCommand 'isof' not found, did you mean:
+[?2004l
+Command 'isof' not found, did you mean:
   command 'isol' from deb ipmiutil (3.1.9-3)
   command 'lsof' from deb lsof (4.95.0-1)
   command 'iso' from deb fonty-rg (0.7-1.1)
 Try: sudo apt install <deb name>
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ isof | grep deleteddf -h[Krm big.logdd if=/dev/zero of=big.log bs=1M count=300rm big.log[Kdd if=/dev/zero of=big.log bs=1M count=300[1P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd test[K[3@mkdir[C[C[C[C[C[5Pdf -hcd ~/P3-Deleted-File-Labp3-Deleted-File-LabP3-Deleted-File-Labdf -h[Kmkdir test[3Pcd[C[C[C[C[Cdd if=/dev/zer of=big.log bs=1M count=300[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Klsof | grep deleted
-[?2004ltail      1867                         hanwen    3r      REG    8,2 314572800 1835346 /home/hanwen/P3-Deleted-File-Lab/test/big.log ([01;31m[Kdeleted[m[K)
+[?2004l
+tail      1867                         hanwen    3r      REG    8,2 314572800 1835346 /home/hanwen/P3-Deleted-File-Lab/test/big.log ([01;31m[Kdeleted[m[K)
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ kill 1867[K[K[K[K[K[K[K[K[Kkill 1867
-[?2004l[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ f[Kdf -h
-[?2004lFilesystem      Size  Used Avail Use% Mounted on
+[?2004l
+[?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ f[Kdf -h
+[?2004l
+Filesystem      Size  Used Avail Use% Mounted on
 tmpfs           392M  1.1M  391M   1% /run
 /dev/sda2        30G  6.9G   21G  25% /
 tmpfs           2.0G     0  2.0G   0% /dev/shm
@@ -50,10 +68,13 @@ tmpfs           5.0M     0  5.0M   0% /run/lock
 linux           952G  374G  579G  40% /media/sf_linux
 tmpfs           392M   16K  392M   1% /run/user/1000
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ echo "===P3 INCIDENT END ==="
-[?2004l===P3 INCIDENT END ===
+[?2004l
+===P3 INCIDENT END ===
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ DATE[K[K[K[Ksaate[K[K[K[K[Kdate
-[?2004lSun Mar  8 05:36:49 PM PDT 2026
+[?2004l
+Sun Mar  8 05:36:49 PM PDT 2026
 [?2004hhanwen@hanwen:~/P3-Deleted-File-Lab/test$ exit
-[?2004lexit
+[?2004l
+exit
 
 Script done on 2026-03-08 17:36:52-07:00 [COMMAND_EXIT_CODE="0"]
