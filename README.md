@@ -10,21 +10,22 @@ Ubuntu Server (VirtualBox)
 
 ## Skills Demonstrated
 
-Linux system troubleshooting  
-Disk usage analysis  
-Log investigation  
-Incident response workflow  
-Root cause analysis  
-System recovery verification
+- Linux system troubleshooting
+- Disk usage analysis
+- Log investigation
+- Incident response workflow
+- Root cause analysis
+- System recovery verification
 
 ## Tools Used
 
-df  
-du  
-lsof  
-iostat  
-sort  
-rm  
+- df
+- du
+- lsof
+- iostat
+- sort
+- rm
+- mdadm
 
 ## Lab Projects
 
@@ -33,7 +34,7 @@ P2 – Inode Exhaustion
 P3 – Deleted File Handle  
 P4 – High IO Incident  
 P5 – Log Explosion  
-P6 – RAID Rebuild
+P6 – RAID Degraded
 
 Each project includes:
 
@@ -41,8 +42,9 @@ Each project includes:
 - Investigation steps
 - Runbook procedures
 - Terminal command logs
-- Screenshots of troubleshooting process
+- Screenshots of the troubleshooting process
 
 ## Purpose
 
-These labs are built to simulate common operational incidents faced by Data Center Engineers and Site Reliability Engineers, and to document the troubleshooting process in a structured and reproducible way.
+These labs simulate common operational incidents faced by Data Center Engineers and Site Reliability Engineers.  
+Each lab documents the troubleshooting process in a structured and reproducible way.
