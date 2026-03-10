@@ -1,0 +1,57 @@
+P6 - RAID Degraded Incident Summary
+
+1. Create project directory
+
+mkdir P6-RAID-Degraded-Lab
+cd P6-RAID-Degraded-Lab
+
+2. Verify RAID management tool is available
+
+which mdadm
+
+3. Create two disk image files
+
+dd if=/dev/zero of=disk1.img bs=1M count=200
+dd if=/dev/zero of=disk2.img bs=1M count=200
+
+4. Attach disk images to loop devices
+
+sudo losetup -fP disk1.img
+sudo losetup -fP disk2.img
+
+5. Create a RAID1 array
+
+sudo mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/loop0 /dev/loop1
+
+6. Verify RAID status
+
+cat /proc/mdstat
+
+Example output:
+[UU]
+
+7. Simulate disk failure
+
+sudo mdadm /dev/md0 --fail /dev/loop1
+
+8. Remove failed disk
+
+sudo mdadm /dev/md0 --remove /dev/loop1
+
+9. Verify degraded RAID state
+
+cat /proc/mdstat
+
+Example output:
+[_U]
+
+10. Add replacement disk
+
+sudo mdadm /dev/md0 --add /dev/loop1
+
+11. Verify RAID recovery
+
+cat /proc/mdstat
+
+Expected result:
+[UU]
