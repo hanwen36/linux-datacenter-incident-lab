@@ -1,0 +1,128 @@
+Script started on 2026-03-10 20:59:25-07:00 [TERM="linux" TTY="/dev/tty1" COLUMNS="160" LINES="50"]
+[?2004hhanwen@hanwen:~$ echo "=== P8 NEW[KTWORK LATENCY INCIDENT START ==="
+[?2004l=== P8 NETWORK LATENCY INCIDENT START ===
+[?2004hhanwen@hanwen:~$ da[K[Kdate
+[?2004lTue Mar 10 09:00:03 PM PDT 2026
+[?2004hhanwen@hanwen:~$ mkdir ~/P8-Lab-New[Ktwork-Latency
+[?2004l[?2004hhanwen@hanwen:~$ cdmkdir ~/P8-Lab-Network-Latency[C[1P ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cc ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cd ~/P8-Lab-Network-Latency[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ls
+[?2004l[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ping -c 5 8.8.8.8
+[?2004lPING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=20.7 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=255 time=14.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=255 time=15.4 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=255 time=17.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=255 time=13.4 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4014ms
+rtt min/avg/max/mdev = 13.415/16.160/20.683/2.630 ms
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ip a
+[?2004l1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:4e:3f:eb brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 74143sec preferred_lft 74143sec
+    inet6 fd17:625c:f037:2:a00:27ff:fe4e:3feb/64 scope global dynamic mngtmpaddr noprefixroute 
+       valid_lft 86117sec preferred_lft 14117sec
+    inet6 fe80::a00:27ff:fe4e:3feb/64 scope link 
+       valid_lft forever preferred_lft forever
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ tc qdisc show
+[?2004lqdisc noqueue 0: dev lo root refcnt 2 
+qdisc fq_codel 0: dev enp0s3 root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ sudo tc qdisc add dev enp0s3 root netem delay 200ms
+[?2004l[sudo] password for hanwen: 
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ping -c 5 8.8.8.
+[?2004lping: 8.8.8.: Name or service not known
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ping -c 5 8.8.8.8
+[?2004lPING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=224 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=255 time=216 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=255 time=216 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=255 time=215 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=255 time=218 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 215.006/217.826/224.496/3.500 ms
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ tc qdisc show dev enp0s3
+[?2004lqdisc netem 8003: root refcnt 2 limit 1000 delay 200ms
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ sudo tc qdisc del dev enp0s3 root
+[?2004l[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ping --c 5 8.8.8.8
+[?2004lping: invalid option -- '-'
+
+Usage
+  ping [options] <destination>
+
+Options:
+  <destination>      DNS name or IP address
+  -a                 use audible ping
+  -A                 use adaptive ping
+  -B                 sticky source address
+  -c <count>         stop after <count> replies
+  -C                 call connect() syscall on socket creation
+  -D                 print timestamps
+  -d                 use SO_DEBUG socket option
+  -e <identifier>    define identifier for ping session, default is random for
+                     SOCK_RAW and kernel defined for SOCK_DGRAM
+                     Imply using SOCK_RAW (for IPv4 only for identifier 0)
+  -f                 flood ping
+  -h                 print help and exit
+  -H                 force reverse DNS name resolution (useful for numeric
+                     destinations or for -f), override -n
+  -I <interface>     either interface name or address
+  -i <interval>      seconds between sending each packet
+  -L                 suppress loopback of multicast packets
+  -l <preload>       send <preload> number of packages while waiting replies
+  -m <mark>          tag the packets going out
+  -M <pmtud opt>     define path MTU discovery, can be one of <do|dont|want|probe>
+  -n                 no reverse DNS name resolution, override -H
+  -O                 report outstanding replies
+  -p <pattern>       contents of padding byte
+  -q                 quiet output
+  -Q <tclass>        use quality of service <tclass> bits
+  -s <size>          use <size> as number of data bytes to be sent
+  -S <size>          use <size> as SO_SNDBUF socket option value
+  -t <ttl>           define time to live
+  -U                 print user-to-user latency
+  -v                 verbose output
+  -V                 print version and exit
+  -w <deadline>      reply wait <deadline> in seconds
+  -W <timeout>       time to wait for response
+
+IPv4 options:
+  -4                 use IPv4
+  -b                 allow pinging broadcast
+  -R                 record route
+  -T <timestamp>     define timestamp, can be one of <tsonly|tsandaddr|tsprespec>
+
+IPv6 options:
+  -6                 use IPv6
+  -F <flowlabel>     define flow label, default is random
+  -N <nodeinfo opt>  use IPv6 node info query, try <help> as argument
+
+For more details see ping(8).
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ ping --c 5 8.8.8.8[1P
+[?2004lPING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=255 time=19.1 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=255 time=11.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=255 time=14.6 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=255 time=10.1 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=255 time=15.1 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4009ms
+rtt min/avg/max/mdev = 10.107/13.978/19.148/3.235 ms
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ echo "=== P8 INCIDENT RESOLVED ==="
+[?2004l=== P8 INCIDENT RESOLVED ===
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ DATE[K[K[K[Kdate
+[?2004lTue Mar 10 09:11:07 PM PDT 2026
+[?2004hhanwen@hanwen:~/P8-Lab-Network-Latency$ exx[Kit
+[?2004lexit
+
+Script done on 2026-03-10 21:11:15-07:00 [COMMAND_EXIT_CODE="0"]
