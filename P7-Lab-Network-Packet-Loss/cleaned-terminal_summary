@@ -1,0 +1,13 @@
+## Cleaned Terminal Summary
+
+Verified network connectivity using `ping` to an external host (8.8.8.8), confirming normal operation with 0% packet loss.
+
+Introduced simulated packet loss using Linux traffic control (`tc netem`) on interface `enp0s3`.
+
+Repeated connectivity tests with `ping -c 20` confirmed intermittent packet loss.
+
+Inspected traffic control configuration using `tc qdisc show` to verify the packet loss rule.
+
+Removed the traffic control rule using `tc qdisc del` to restore normal network connectivity.
+
+Final verification confirmed stable connectivity with 0% packet loss.
