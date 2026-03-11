@@ -1,39 +1,29 @@
 # P7 Network Packet Loss Incident
 
-## Scenario
+## Incident Description
 
-A server experiences intermittent connectivity due to packet loss.
+This lab simulates a network packet loss issue on a Linux server.
 
-## Investigation
+Packet loss can cause unstable connections, slow application responses, and intermittent failures.
 
-Initial connectivity test:
+## Environment
 
-ping -c 5 8.8.8.8
+Ubuntu Server (VirtualBox)
 
-Result: 0% packet loss
+## Symptoms
 
-## Simulated Failure
+- Intermittent connectivity
+- Packet loss during ping tests
+- Increased latency
 
-Network packet loss was introduced using traffic control.
+## Tools Used
 
-sudo tc qdisc add dev enp0s3 root netem loss 30%
+ping  
+tc (traffic control)  
+ip  
 
-## Verification
+## Summary
 
-ping -c 20 8.8.8.8
+Packet loss was simulated using Linux traffic control (tc netem).
 
-Result:
-
-25% packet loss observed.
-
-## Resolution
-
-Remove traffic control rule:
-
-sudo tc qdisc del dev enp0s3 root
-
-Connectivity restored.
-
-## Lessons Learned
-
-Packet loss can be diagnosed using ping and network queue inspection with tc.
+The issue was identified using ping tests and network queue inspection, and resolved by removing the traffic control rule.
