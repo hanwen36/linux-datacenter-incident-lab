@@ -1,0 +1,15 @@
+## Cleaned Terminal Summary
+
+Verified baseline network latency using `ping` to an external host (8.8.8.8), confirming normal response times.
+
+Inspected network interfaces using `ip a` and confirmed the active interface.
+
+Introduced artificial network latency using Linux traffic control (`tc netem`) by applying a 200ms delay to interface `enp0s3`.
+
+Repeated ping tests confirmed significantly increased latency during transmission.
+
+Verified the traffic control configuration using `tc qdisc show`.
+
+Removed the traffic control rule using `tc qdisc del` to restore normal network performance.
+
+Final verification confirmed latency returned to normal levels.
